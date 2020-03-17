@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:fresh_login/Widgets/customElevation.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,13 +19,13 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(10.0),
+      // padding: const EdgeInsets.all(10.0),
       children: <Widget> [
         Column(
           children: <Widget>[
             Container(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
+                padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -36,7 +38,7 @@ class LoginPageState extends State<LoginPage> {
                         foreground: Paint()..shader = linearGradient,
                       ),
                     ),
-                    SizedBox(height: 10.0,),
+                    SizedBox(height: 10.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -93,7 +95,7 @@ class LoginPageState extends State<LoginPage> {
                         Text(
                           "Remember Me",
                         ),
-                        SizedBox(width: 45.0),
+                        SizedBox(width: 35.0),
                         Text(
                           "Forgot Password?",
                         )
@@ -140,29 +142,84 @@ class LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        // ToDo: Change icon button to image button for social link
-                        SocButton(buttonColor: Color(0xFF1254AB), buttonIcon: Icon(Icons.face)),
+                        SocButton(buttonColor: Color(0xFF1254AB), buttonIcon: FaIcon(FontAwesomeIcons.facebookF)),
 
-                        SocButton(buttonColor: Color(0xFF0BAAFC), buttonIcon: Icon(Icons.textsms)),
+                        SocButton(buttonColor: Color(0xFF0BAAFC), buttonIcon: FaIcon(FontAwesomeIcons.twitter)),
                         
-                        SocButton(buttonColor: Color(0xFFF65A5B), buttonIcon: Icon(Icons.group)),
+                        SocButton(buttonColor: Color(0xFFF65A5B), buttonIcon: FaIcon(FontAwesomeIcons.googlePlusG)),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
             )
           ],
+        ),
+        SizedBox(height: 10.0),
+        ClipPath(
+          clipper: BottomWaveClipper(),
+          child: Container(
+            height: MediaQuery.of(context).size.height / 2,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: orangeGradients,
+                begin: Alignment.topLeft,
+                end: Alignment.center,
+              )
+            ),
+          ),
         )
       ]
     );
   }
 }
 
-// ToDo: Change icon button to image button for social link
+const List<Color> orangeGradients = [
+  Color(0xFFFF9844),
+  Color(0xFFFE8853),
+  Color(0xFFFD7267),
+];
+
+class BottomWaveClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+
+    var w = size.width;
+    var h = size.height;
+
+    path.lineTo(w, h);
+
+    var firstControlPoint = new Offset(0.0, 0.0);
+    var firstEndPoint = new Offset(size.width / 7, size.height / 2);
+
+    // path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy, firstEndPoint.dx, firstEndPoint.dy);
+    path.quadraticBezierTo(firstEndPoint.dx, firstEndPoint.dy, firstControlPoint.dx, firstControlPoint.dy);
+
+    var secondControlPoint = Offset(size.width / 7, size.height / 5);
+    var secondEndPoint = Offset(size.width, size.height);
+
+    // path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy, secondEndPoint.dx, secondEndPoint.dy);
+    path.quadraticBezierTo(secondEndPoint.dx, secondEndPoint.dy, secondControlPoint.dx, secondControlPoint.dy);
+
+    // var thirdControlPoint = Offset(size.width, 0);
+    // var thirdEndPoint = Offset(size.width, size.height);
+
+    // path.quadraticBezierTo(thirdControlPoint.dx, thirdControlPoint.dy, thirdEndPoint.dx, thirdEndPoint.dy);
+
+    path.lineTo(0.0, h);
+
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
 class SocButton extends StatelessWidget {
   final Color buttonColor;
-  final Icon buttonIcon;
+  final FaIcon buttonIcon;
 
   const SocButton({
     Key key,
