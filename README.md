@@ -3,7 +3,7 @@ Simple login application written with dart + flutter (Only Design)
 
 # Screenshots
 <!-- ![](./screenshots/login.png) -->
-<img src="https://github.com/favicon.ico" width="48">
+<img src="./screenshots/login.png" width="48">
 
 # Design by
 [Design by suresh UI](https://www.uplabs.com/posts/login-screen-b84c31d8-085d-406b-8787-04131d6a88ad) - Design from Uplabs
